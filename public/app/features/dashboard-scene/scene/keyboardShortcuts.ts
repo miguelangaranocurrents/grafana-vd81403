@@ -133,7 +133,8 @@ export function setupKeyboardShortcuts(scene: DashboardScene) {
     onTrigger: withFocusedPanel(scene, async (vizPanel: VizPanel) => {
       const url = await tryGetExploreUrlForPanel(vizPanel);
       if (url) {
-        locationService.push(url);
+        // The explore URL already includes the app sub path, but locationService.push expects a path without it
+        locationService.push(locationUtil.stripBaseFromUrl(url));
       }
     }),
   });
